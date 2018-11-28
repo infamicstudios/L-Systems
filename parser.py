@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 from matplotlib import collections  as mc
 import pylab as pl
+from numba import cuda
 
 #@vectorize(['int8(int8, int8)'], target='cuda')
 
@@ -146,30 +147,29 @@ def plotLsystem(fakeTurtle,instructions,angle,distance, scaleFactor = 1):
 def main(plot):
 	fakeTurtle = NoTurtle.UndrawnTurtle()            # create the turtle
 
-	rules = { "F" : "F++F++F|F-F++F" }
-	i = 7
+	rules = {"X" : "XFX-YF-YF+FX+FX-YF-YFFX+YF+FXFXYF-FX+YF+FXFX+YF-FXYF-YF-FX+FX+YFYF-", "Y" : "+FXFX-YF-YF+FX+FXYF+FX-YFYF-FX-YF+FXYFYF-FX-YFFX+FX+YF-YF-FX+FX+YFY"}
+	i = 2
 	while True:
-		instructions = lsystem('F++F++F++F++F', rules, i)
+		instructions = lsystem('-YF', rules, i)
 		
 		if plot:
 			from plot import performPlot
-			plotset = plotLsystem(fakeTurtle, instructions, 36, 1000*(1/3)**i)
+			plotset = plotLsystem(fakeTurtle, instructions, 90, 1000*(1/3)**i)
 			print("Generating plot")
 			start_time = time.time()
-			performPlot(plotset)
+			lc = performPlot(plotset)
 			print("--- %s seconds ---" % (time.time() - start_time))
 			fig, ax = pl.subplots()
 			ax.add_collection(lc)
 			ax.axis('equal')
 			ax.autoscale()
 			ax.margins(0.1)
-			plt.savefig('koch.png', transparent=True)
+			plt.savefig('koch.png', transparent=True, dpi= 1000)
 			plt.show()
 
 
 		else:
-			print(drawLsystem(fakeTurtle, instructions, 36, 1000*(1/3)**i))
+			print(drawLsystem(fakeTurtle, instructions, 60, 1000*(1/3)**i))
 		i += 1
-	wn.exitonclick()
 
 main(True)

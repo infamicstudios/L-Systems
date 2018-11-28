@@ -4,8 +4,6 @@ import matplotlib.lines as mlines
 from matplotlib import collections  as mc
 import pylab as pl
 from numba import jit
-
-@cuda.jit
 def newline(p1, p2):
 	ax = plt.gca()
 	xmin, xmax = ax.get_xbound()
