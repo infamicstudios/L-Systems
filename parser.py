@@ -1,4 +1,5 @@
 import turtle
+from Vector import vector2
 
 def lsystem(axioms, rules, iterations):
     #    We iterate through our method required numbers of time.
@@ -85,56 +86,25 @@ def plotLsystem(aTurtle,instructions,angle,distance, scaleFactor = 1):
     Ycoordinates = [0]
     coordinates = []
     returnedCoordinate = []
+	vec = vector2(0,0)
 
-    aTurtle.penup()
-    aTurtle.setposition(0, 0)
-    aTurtle.pendown()
 
     for cmd in instructions:
         if cmd == 'F':
-            aTurtle.forward(distance)
+            returnCoordiantes.append(vec.Foreward(self, distance))
         elif cmd == 'f':
-            aTurtle.penup()
-            aTurtle.forward(distance)
-            aTurtle.pendown()
+			#put stuff here later
+			print("cool")
         elif cmd == 'B':
             aTurtle.backward(distance)
         elif cmd == '-' and commandInverse == False:
-            aTurtle.right(angle)
+            vec.turnAntiWise(angle)
         elif cmd == '-' and commandInverse == True:
-            aTurtle.left(angle)
+            vec.turnClockwise(angle)
         elif cmd == '+' and commandInverse == False:
-            aTurtle.left(angle)
+            vec.turnClockwise(angle)
         elif cmd == '+' and commandInverse == True:
-            aTurtle.right(angle)
-        elif cmd == '|':
-            aTurtle.left(180)
-        elif cmd == '{':
-            aTurtle.fill(True)
-            aTurtle.begin_poly()
-
-        elif cmd == '}':
-            aTurtle.fill(False)
-            aTurtle.end_poly()
-        elif cmd == '@':
-            aTurtle.dot((distance/2),"black")
-        elif cmd == '>':
-            distance = distance * scaleFactor
-        elif cmd == '<':
-            distance = distance * scaleFactor
-        elif cmd == '&':
-            if commandInverse == True:
-                commandInverse = False
-            else: 
-                commandInverse = True
-        elif cmd == "[":
-            coordinates.append((aTurtle.xcor(),aTurtle.ycor())) 
-        elif cmd == "]":
-            aTurtle.penup()
-            aTurtle.setposition(coordinates[-1][0], coordinates[-1][1])
-            coordinates.pop()
-            aTurtle.pendown()
-        
+            vec.turnAntiWise(angle)
         returnedCoordinate.append([(Xcoordinates[-1],Ycoordinates[-1]),(aTurtle.xcor(), aTurtle.ycor())])
         Xcoordinates.append(aTurtle.xcor())
         Ycoordinates.append(aTurtle.ycor())
